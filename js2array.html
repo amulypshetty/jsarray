@@ -1,0 +1,91 @@
+<html>
+<head>
+    <title>JS Array Operations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .list-item {
+            background: white;
+            padding: 8px;
+            margin: 4px 0;
+            border-radius: 4px;
+            box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
+        }
+    </style>
+    <script>
+        var cars = ["benz", "bmw", "maruti", "audi", "ferrari", "porsche"];
+
+        function showList() {
+            // Remove previous list
+            var oldList = document.getElementById("car-list");
+            if (oldList) oldList.remove();
+
+            // Create new list container
+            var listDiv = document.createElement("div");
+            listDiv.id = "car-list";
+
+            // Display each car
+            cars.forEach(function(car) {
+                var item = document.createElement("div");
+                item.className = "list-item";
+                item.innerHTML = car;
+                listDiv.appendChild(item);
+            });
+
+            document.body.appendChild(listDiv);
+        }
+
+        function addCar() {
+            var carName = document.getElementById("car-input").value.trim();
+            if (carName) {
+                cars.push(carName);
+                showList();
+            }
+            document.getElementById("car-input").value = "";
+        }
+
+        function deleteCar() {
+            var carName = document.getElementById("car-input").value.trim();
+            cars = cars.filter(function(car) {
+                return car.toLowerCase() !== carName.toLowerCase();
+            });
+            showList();
+            document.getElementById("car-input").value = "";
+        }
+
+        function searchCar() {
+            var carName = document.getElementById("car-input").value.trim();
+            var searchResult = cars.filter(function(car) {
+                return car.toLowerCase() === carName.toLowerCase();
+            });
+
+            var resultTag = document.createElement("h3");
+            resultTag.innerHTML = searchResult.length > 0 
+                ? `${carName} is available ✅` 
+                : `${carName} not found ❌`;
+
+            document.body.appendChild(resultTag);
+            document.getElementById("car-input").value = "";
+        }
+    </script>
+</head>
+<body onload="showList()">
+    <h1>Car List Operations</h1>
+    <input type="text" id="car-input" placeholder="Enter car name">
+    <button onclick="addCar()">Add</button>
+    <button onclick="deleteCar()">Delete</button>
+    <button onclick="searchCar()">Search</button>
+</body>
+</html>
